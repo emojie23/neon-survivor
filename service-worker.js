@@ -1,4 +1,4 @@
-const CACHE = 'neon-survivor-v6-fixed-joystick';
+const CACHE = 'neon-survivor-v7-gap-centered-sticks';
 const FILES = [
   './', './index.html', './styles.css', './game.js', './manifest.webmanifest',
   './assets/character-triptych.png',

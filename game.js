@@ -103,6 +103,7 @@
     dpr = Math.min(devicePixelRatio || 1, 2); W = Math.max(320, r.width); H = Math.max(300, r.height);
     canvas.width = Math.floor(W*dpr); canvas.height = Math.floor(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
     bossWallpaper.width = Math.floor(W*dpr); bossWallpaper.height = Math.floor(H*dpr); bossWallpaperCtx.setTransform(dpr,0,0,dpr,0,0);
+    const arena=$('#arena-wrap');if(matchMedia('(pointer: coarse) and (orientation: landscape)').matches){const scale=Math.min(1,(W-20)/ROOM_W,(H-20)/ROOM_H),gap=Math.max(0,(W-ROOM_W*scale)/2),radius=$('#move-pad').offsetWidth/2||62,center=Math.max(radius+8,Math.min(W/2-radius-8,gap/2));arena.style.setProperty('--stick-gap-center',`${center}px`);}else arena.style.removeProperty('--stick-gap-center');
     if (!mouse.x) { mouse.x=W*.7; mouse.y=H*.5; }
   }
 
