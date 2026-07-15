@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050714" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>霓虹幸存者 // NEON SURVIVOR</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <main id="game-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-kicker">NIGHT CITY // SURVIVAL TEST</span>
+        <strong>霓虹幸存者</strong>
+      </div>
+      <div class="wave-panel">
+        <span>FLOOR <b id="wave-value">01</b></span>
+        <strong id="timer-value">普通房</strong>
+      </div>
+      <div class="top-actions">
+        <button id="fullscreen-button" class="icon-button" aria-label="切换全屏">FULLSCREEN</button>
+        <button id="sound-button" class="icon-button" aria-label="切换声音">SOUND: ON</button>
+      </div>
+    </header>
+
+    <section id="arena-wrap">
+      <canvas id="game" width="1280" height="720" aria-label="游戏区域"></canvas>
+
+      <div class="hud left-hud">
+        <div class="hud-label"><span id="character-ident">PULSE // 脉冲手枪</span><b id="hp-text">♥ ♥ ♥</b></div>
+        <div id="life-pips" class="life-pips"><i></i><i></i><i></i></div>
+        <div class="hud-label xp-label"><span>SYNC / LV.<b id="level-value">1</b></span><b id="xp-text">0 / 8</b></div>
+        <div class="meter xp"><i id="xp-fill"></i></div>
+      </div>
+
+      <div class="hud right-hud">
+        <div><span>KILLS</span><b id="kills-value">000</b></div>
+        <div><span>ROOMS</span><b id="credits-value">0/0</b></div>
+      </div>
+
+      <div id="boss-bar" class="boss-bar hidden">
+        <span id="boss-name">威胁单位 // NEON BUTCHER</span>
+        <div class="meter"><i id="boss-fill"></i></div>
+      </div>
+
+      <section id="boss-intro" class="boss-intro">
+        <canvas id="boss-wallpaper" class="boss-wallpaper" width="1280" height="720"></canvas>
+        <div class="boss-intro-shade"></div>
+        <div class="boss-intro-copy">
+          <span>WARNING // EXTREME THREAT</span>
+          <h2 id="boss-intro-name">霓虹屠夫</h2>
+          <p id="boss-intro-skill">旋刃突进 · 弹幕爆发</p>
+        </div>
+      </section>
+
+      <section id="start-screen" class="overlay visible">
+        <div class="hero-card">
+          <p class="eyebrow">CYBERNETIC COMBAT TRIAL // 01</p>
+          <h1>活过今晚。<br><em>别让他们靠近。</em></h1>
+          <p class="intro">探索两层地下设施，清理普通房、获取奖励并击败每层 Boss。镜头始终以人物为中心，你需要亲自瞄准和射击。</p>
+          <div class="controls">
+            <div><kbd>WASD</kbd><span>移动</span></div>
+            <div><kbd>鼠标</kbd><span>瞄准</span></div>
+            <div><kbd>左键</kbd><span>射击</span></div>
+            <div><kbd>P / ESC</kbd><span>暂停</span></div>
+          </div>
+          <button id="start-button" class="primary-button">接入战斗 <span>ENTER</span></button>
+          <p class="tip">清空房间后门禁才会解除 · 每局拥有 3 格生命</p>
+        </div>
+      </section>
+
+      <section id="character-screen" class="overlay">
+        <div class="character-panel">
+          <p class="eyebrow">SELECT COMBAT SHELL</p>
+          <h2>选择角色</h2>
+          <p>每个角色拥有不同的初始武器和作战属性</p>
+          <div class="character-grid">
+            <button class="character-card pulse" data-character="pulse">
+              <div class="character-cover"></div>
+              <div class="character-info"><span>01 // 均衡</span><h3>脉冲 PULSE</h3><b>脉冲手枪</b><p>伤害与机动均衡，适合首次接入。</p><small>伤害 26 · 射速 4.2 · 移速 255</small></div>
+            </button>
+            <button class="character-card razor" data-character="razor">
+              <div class="character-cover"></div>
+              <div class="character-info"><span>02 // 高速</span><h3>锐刃 RAZOR</h3><b>双持微冲</b><p>高射速、高移速，单发伤害较低。</p><small>双弹 14 · 射速 7.2 · 移速 290</small></div>
+            </button>
+            <button class="character-card bastion" data-character="bastion">
+              <div class="character-cover"></div>
+              <div class="character-info"><span>03 // 重装</span><h3>堡垒 BASTION</h3><b>磁轨重炮</b><p>攻击缓慢但威力巨大，可穿透目标。</p><small>伤害 62 · 穿透 2 · 移速 215</small></div>
+            </button>
+          </div>
+          <p class="tip">按数字键 1 / 2 / 3 也可快速选择</p>
+        </div>
+      </section>
+
+      <section id="upgrade-screen" class="overlay">
+        <div class="upgrade-panel">
+          <p class="eyebrow">SYSTEM OVERRIDE</p>
+          <h2 id="upgrade-title">义体升级可用</h2>
+          <p>选择一项强化，时间已暂停</p>
+          <div id="upgrade-cards" class="upgrade-grid"></div>
+        </div>
+      </section>
+
+      <section id="pause-screen" class="overlay compact">
+        <div class="modal-card">
+          <p class="eyebrow">CONNECTION SUSPENDED</p>
+          <h2>暂停</h2>
+          <p>按 <kbd>P</kbd> 或 <kbd>ESC</kbd> 继续</p>
+        </div>
+      </section>
+
+      <section id="gameover-screen" class="overlay">
+        <div class="hero-card gameover-card">
+          <p class="eyebrow danger">SIGNAL LOST</p>
+          <h1>义体离线</h1>
+          <div class="result-grid">
+            <div><span>抵达楼层</span><b id="result-wave">1</b></div>
+            <div><span>清除目标</span><b id="result-kills">0</b></div>
+            <div><span>生存时间</span><b id="result-time">0:00</b></div>
+          </div>
+          <button id="restart-button" class="primary-button">重新接入 <span>R</span></button>
+        </div>
+      </section>
+
+      <div id="wave-banner" class="wave-banner">
+        <span>AREA LINKED</span>
+        <strong>普通房</strong>
+      </div>
+      <div id="touch-controls" class="touch-controls" aria-label="手机触控操作">
+        <div id="move-pad" class="touch-pad move-pad"><i></i><span>MOVE</span></div>
+        <div id="aim-pad" class="touch-pad aim-pad"><i></i><span>AIM / FIRE</span></div>
+      </div>
+      <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+    </section>
+
+    <footer>
+      <span>PROTOTYPE BUILD 0.1</span>
+      <span>TIP // 鼠标瞄准 · 左键射击 · 清空房间解除门禁</span>
+      <span id="fps-value">60 FPS</span>
+    </footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

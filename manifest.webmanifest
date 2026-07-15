@@ -1,0 +1,11 @@
+{
+  "name": "霓虹幸存者 // Neon Survivor",
+  "short_name": "霓虹幸存者",
+  "description": "赛博朋克俯视角房间探索射击游戏",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#03040b",
+  "theme_color": "#050714",
+  "lang": "zh-CN"
+}
