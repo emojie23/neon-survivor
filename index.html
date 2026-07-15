@@ -13,14 +13,6 @@
 </head>
 <body>
   <div class="scanlines"></div>
-  <section class="orientation-lock" aria-label="请横屏游玩">
-    <div class="orientation-card">
-      <div class="rotate-phone" aria-hidden="true"><i></i></div>
-      <p>LANDSCAPE MODE REQUIRED</p>
-      <h1>请将手机横过来</h1>
-      <span>横屏后将自动进入游戏 · 左侧移动，右侧瞄准射击</span>
-    </div>
-  </section>
   <main id="game-shell">
     <header class="topbar">
       <div class="brand">
@@ -123,7 +115,8 @@
         <div class="modal-card">
           <p class="eyebrow">CONNECTION SUSPENDED</p>
           <h2>暂停</h2>
-          <p>按 <kbd>P</kbd> 或 <kbd>ESC</kbd> 继续</p>
+          <p>战斗已暂停，准备好后继续接入</p>
+          <button id="resume-button" class="primary-button">继续战斗 <span>RESUME</span></button>
         </div>
       </section>
 
@@ -145,9 +138,10 @@
         <strong>普通房</strong>
       </div>
       <div id="touch-controls" class="touch-controls" aria-label="手机触控操作">
-        <div id="move-pad" class="touch-pad move-pad"><i></i><span>MOVE</span></div>
-        <div id="aim-pad" class="touch-pad aim-pad"><i></i><span>AIM / FIRE</span></div>
+        <div class="touch-zone move-zone"><div id="move-pad" class="touch-pad move-pad"><i></i><span>MOVE</span></div></div>
+        <div class="touch-zone aim-zone"><div id="aim-pad" class="touch-pad aim-pad"><i></i><span>AIM / FIRE</span></div></div>
       </div>
+      <button id="mobile-pause-button" class="mobile-pause-button" aria-label="暂停游戏"><b>Ⅱ</b><span>暂停</span></button>
       <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
       <div class="corner corner-bl"></div><div class="corner corner-br"></div>
     </section>

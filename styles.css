@@ -19,7 +19,6 @@ button { font: inherit; }
 .top-actions { display:flex; gap:8px; }
 .scanlines { position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: .15; background: repeating-linear-gradient(0deg, transparent 0 3px, #000 4px); }
 #game-shell { width: 100%; height: 100%; height: 100dvh; display: grid; grid-template-rows: 72px minmax(0, 1fr) 30px; padding: 0 22px; }
-.orientation-lock { display:none; }
 .mobile-control-hint { display:none; }
 .topbar, footer { display: flex; align-items: center; justify-content: space-between; letter-spacing: .15em; text-transform: uppercase; }
 .topbar { border-bottom: 1px solid rgba(57,246,255,.25); }
@@ -36,12 +35,16 @@ button { font: inherit; }
 canvas { width: 100%; height: 100%; display: block; }
 #game, .touch-pad { touch-action:none; user-select:none; -webkit-user-select:none; }
 .touch-controls { display:none; position:absolute; inset:0; z-index:15; pointer-events:none; }
-.touch-pad { position:absolute; bottom:18px; width:116px; height:116px; border:1px solid rgba(57,246,255,.3); border-radius:50%; background:radial-gradient(circle,rgba(57,246,255,.08),rgba(4,8,20,.38)); box-shadow:inset 0 0 22px rgba(57,246,255,.07); pointer-events:auto; }
+.touch-zone { position:absolute; top:0; bottom:0; width:50%; pointer-events:auto; }
+.move-zone { left:0; }.aim-zone { right:0; }
+.touch-pad { position:absolute; bottom:20px; width:142px; height:142px; border:2px solid rgba(57,246,255,.34); border-radius:50%; background:radial-gradient(circle,rgba(57,246,255,.11),rgba(4,8,20,.32)); box-shadow:inset 0 0 28px rgba(57,246,255,.09),0 0 20px rgba(0,0,0,.24); pointer-events:none; opacity:.72; transition:opacity .12s ease,box-shadow .12s ease; }
+.touch-pad.active { opacity:1; box-shadow:inset 0 0 30px rgba(57,246,255,.13),0 0 26px rgba(57,246,255,.16); }
 .touch-pad::before { content:""; position:absolute; inset:20px; border:1px dashed rgba(57,246,255,.2); border-radius:50%; }
-.touch-pad i { position:absolute; left:50%; top:50%; width:42px; height:42px; margin:-21px; border-radius:50%; background:rgba(57,246,255,.25); border:2px solid var(--cyan); box-shadow:0 0 18px rgba(57,246,255,.35); transform:translate(0,0); }
+.touch-pad i { position:absolute; left:50%; top:50%; width:50px; height:50px; margin:-25px; border-radius:50%; background:rgba(57,246,255,.27); border:2px solid var(--cyan); box-shadow:0 0 18px rgba(57,246,255,.4); transform:translate(0,0); }
 .touch-pad span { position:absolute; left:50%; bottom:-15px; transform:translateX(-50%); width:max-content; color:rgba(57,246,255,.65); font:900 8px Consolas,monospace; letter-spacing:.15em; }
-.move-pad { left:24px; }.aim-pad { right:24px; border-color:rgba(255,47,146,.38); background:radial-gradient(circle,rgba(255,47,146,.1),rgba(4,8,20,.38)); }
+.move-pad { left:calc(60% - 71px); }.aim-pad { left:calc(40% - 71px); border-color:rgba(255,47,146,.42); background:radial-gradient(circle,rgba(255,47,146,.13),rgba(4,8,20,.32)); }
 .aim-pad::before { border-color:rgba(255,47,146,.25); }.aim-pad i { background:rgba(255,47,146,.25); border-color:var(--pink); box-shadow:0 0 18px rgba(255,47,146,.4); }.aim-pad span { color:rgba(255,47,146,.72); }
+.mobile-pause-button { display:none; }
 :fullscreen #game-shell { padding:0 10px; }
 .corner { position: absolute; width: 22px; height: 22px; border-color: var(--cyan); opacity: .75; pointer-events: none; }
 .corner-tl { left: 8px; top: 8px; border-left: 2px solid; border-top: 2px solid; }
@@ -168,6 +171,8 @@ footer { color: #405a6c; font: 700 9px Consolas, monospace; }
 
 @media (pointer: coarse) {
   .touch-controls { display:block; }
+  .mobile-pause-button { position:absolute; right:max(12px,env(safe-area-inset-right)); top:12px; z-index:18; display:flex; align-items:center; gap:7px; min-width:76px; min-height:40px; padding:7px 11px; color:var(--text); border:1px solid rgba(57,246,255,.4); border-radius:6px; background:rgba(3,7,19,.82); box-shadow:0 0 18px rgba(57,246,255,.12); font:700 11px "Microsoft YaHei",sans-serif; }
+  .mobile-pause-button b { color:var(--cyan); font:900 16px Consolas,monospace; }
   .left-hud { bottom:145px; width:min(290px,48vw); }
   .right-hud { bottom:148px; }
   .icon-button { min-height:32px; }
@@ -209,19 +214,7 @@ footer { color: #405a6c; font: 700 9px Consolas, monospace; }
 }
 
 @media (pointer: coarse) and (orientation: landscape) and (max-height: 520px) {
-  .touch-pad { width:96px; height:96px; bottom:12px; }.touch-pad i { width:36px; height:36px; margin:-18px; }
-  .left-hud { bottom:118px; }.right-hud { bottom:120px; }
-}
-
-@media (pointer: coarse) and (orientation: portrait) {
-  .orientation-lock { position:fixed; inset:0; z-index:1000; display:grid; place-items:center; padding:24px; padding-top:max(24px,env(safe-area-inset-top)); padding-bottom:max(24px,env(safe-area-inset-bottom)); background:radial-gradient(circle at 50% 35%,#18264d 0,#080b19 48%,#03040b 100%); text-align:center; }
-  .orientation-card { width:min(430px,92vw); padding:32px 22px; border:1px solid rgba(57,246,255,.35); background:rgba(4,8,22,.9); box-shadow:0 0 45px rgba(57,246,255,.12),inset 0 0 30px rgba(255,47,146,.05); }
-  .orientation-card p { margin:18px 0 5px; color:var(--pink); font:900 9px Consolas,monospace; letter-spacing:.22em; }
-  .orientation-card h1 { margin:0 0 10px; color:var(--text); font-size:clamp(25px,8vw,38px); }
-  .orientation-card span { color:var(--muted); font-size:12px; line-height:1.65; }
-  .rotate-phone { position:relative; width:86px; height:86px; margin:0 auto; }
-  .rotate-phone::before { content:""; position:absolute; left:27px; top:9px; width:30px; height:58px; border:3px solid var(--cyan); border-radius:7px; box-shadow:0 0 18px rgba(57,246,255,.35); animation:rotateDevice 1.8s ease-in-out infinite; }
-  .rotate-phone::after { content:"↻"; position:absolute; inset:0; display:grid; place-items:center; color:var(--pink); font:700 26px Consolas,monospace; transform:translateY(28px); }
-  .rotate-phone i { position:absolute; left:40px; top:59px; z-index:1; width:7px; height:2px; background:var(--cyan); animation:rotateDevice 1.8s ease-in-out infinite; }
-  @keyframes rotateDevice { 0%,18%{transform:rotate(0deg)} 55%,82%{transform:rotate(90deg)} 100%{transform:rotate(0deg)} }
+  .touch-pad { width:124px; height:124px; bottom:14px; }.touch-pad i { width:44px; height:44px; margin:-22px; }
+  .move-pad { left:calc(62% - 62px); }.aim-pad { left:calc(38% - 62px); }
+  .left-hud { bottom:112px; }.right-hud { bottom:114px; }
 }
