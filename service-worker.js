@@ -1,4 +1,4 @@
-const CACHE = 'neon-survivor-v1';
+const CACHE = 'neon-survivor-v2-landscape';
 const FILES = [
   './', './index.html', './styles.css', './game.js', './manifest.webmanifest',
   './assets/character-triptych.png',

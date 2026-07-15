@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#050714" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,6 +13,14 @@
 </head>
 <body>
   <div class="scanlines"></div>
+  <section class="orientation-lock" aria-label="请横屏游玩">
+    <div class="orientation-card">
+      <div class="rotate-phone" aria-hidden="true"><i></i></div>
+      <p>LANDSCAPE MODE REQUIRED</p>
+      <h1>请将手机横过来</h1>
+      <span>横屏后将自动进入游戏 · 左侧移动，右侧瞄准射击</span>
+    </div>
+  </section>
   <main id="game-shell">
     <header class="topbar">
       <div class="brand">
@@ -69,6 +77,10 @@
             <div><kbd>鼠标</kbd><span>瞄准</span></div>
             <div><kbd>左键</kbd><span>射击</span></div>
             <div><kbd>P / ESC</kbd><span>暂停</span></div>
+          </div>
+          <div class="mobile-control-hint">
+            <span><b>左摇杆</b> 移动</span>
+            <span><b>右摇杆</b> 瞄准并射击</span>
           </div>
           <button id="start-button" class="primary-button">接入战斗 <span>ENTER</span></button>
           <p class="tip">清空房间后门禁才会解除 · 每局拥有 3 格生命</p>
