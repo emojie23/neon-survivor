@@ -33,14 +33,14 @@ button { font: inherit; }
 .icon-button:hover { background: rgba(57,246,255,.1); }
 #arena-wrap { min-height: 0; position: relative; margin: 12px 0 8px; overflow: hidden; background: #060919; box-shadow: 0 0 40px rgba(0,0,0,.65), inset 0 0 70px rgba(0,0,0,.55); }
 canvas { width: 100%; height: 100%; display: block; }
-#game, .touch-pad { touch-action:none; user-select:none; -webkit-user-select:none; }
+#game, .touch-controls, .touch-zone, .touch-pad { touch-action:none; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
 .touch-controls { display:none; position:absolute; inset:0; z-index:15; pointer-events:none; }
-.touch-zone { position:absolute; top:0; bottom:0; width:50%; pointer-events:auto; }
+.touch-zone { position:absolute; top:0; bottom:0; width:50%; pointer-events:auto; -webkit-tap-highlight-color:transparent; }
 .move-zone { left:0; }.aim-zone { right:0; }
 .touch-pad { position:absolute; bottom:20px; width:142px; height:142px; border:2px solid rgba(57,246,255,.34); border-radius:50%; background:radial-gradient(circle,rgba(57,246,255,.11),rgba(4,8,20,.32)); box-shadow:inset 0 0 28px rgba(57,246,255,.09),0 0 20px rgba(0,0,0,.24); pointer-events:none; opacity:.72; transition:opacity .12s ease,box-shadow .12s ease; }
 .touch-pad.active { opacity:1; box-shadow:inset 0 0 30px rgba(57,246,255,.13),0 0 26px rgba(57,246,255,.16); }
 .touch-pad::before { content:""; position:absolute; inset:20px; border:1px dashed rgba(57,246,255,.2); border-radius:50%; }
-.touch-pad i { position:absolute; left:50%; top:50%; width:50px; height:50px; margin:-25px; border-radius:50%; background:rgba(57,246,255,.27); border:2px solid var(--cyan); box-shadow:0 0 18px rgba(57,246,255,.4); transform:translate(0,0); }
+.touch-pad i { position:absolute; left:50%; top:50%; width:50px; height:50px; margin:-25px; border-radius:50%; background:rgba(57,246,255,.27); border:2px solid var(--cyan); box-shadow:0 0 18px rgba(57,246,255,.4); transform:translate3d(0,0,0); will-change:transform; }
 .touch-pad span { position:absolute; left:50%; bottom:-15px; transform:translateX(-50%); width:max-content; color:rgba(57,246,255,.65); font:900 8px Consolas,monospace; letter-spacing:.15em; }
 .move-pad { left:calc(60% - 71px); }.aim-pad { left:calc(40% - 71px); border-color:rgba(255,47,146,.42); background:radial-gradient(circle,rgba(255,47,146,.13),rgba(4,8,20,.32)); }
 .aim-pad::before { border-color:rgba(255,47,146,.25); }.aim-pad i { background:rgba(255,47,146,.25); border-color:var(--pink); box-shadow:0 0 18px rgba(255,47,146,.4); }.aim-pad span { color:rgba(255,47,146,.72); }
